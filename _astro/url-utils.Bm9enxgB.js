@@ -1,0 +1,1 @@
+import"./zh_TW.BbwopWaz.js";function s(r,t){const e=r.replace(/^\/|\/$/g,"").toLowerCase(),n=t.replace(/^\/|\/$/g,"").toLowerCase();return e===n}function o(...r){return r.join("/").replace(/\/+/g,"/")}function l(r){return a(`/posts/${r}/`)}function a(r){return o("","/caterpillar-invest-diary/",r)}export{l as g,s as p,a as u};
