@@ -3,7 +3,7 @@
 # 由 crontab 每天早上 11:00 触发（与毛毛虫日记 10:00、酷喵 10:30 错开）
 # 调用 Claude Code headless 模式完成：搜索 → 调研 → 写文章 → 部署
 
-PROJECT_DIR="/Users/xiedonghua/Desktop/AI/github/caterpillar-invest-diary"
+PROJECT_DIR="/Users/xiedonghua/Desktop/AI/github/blogs/caterpillar-invest-diary"
 LOG_FILE="/tmp/caterpillar-invest-diary.log"
 FEISHU_NOTIFY="/Users/xiedonghua/scripts/feishu-notify.sh"
 DATE=$(date +%Y-%m-%d)
