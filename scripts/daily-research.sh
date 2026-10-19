@@ -3,15 +3,16 @@
 # 由 crontab 每天早上 11:00 触发（与毛毛虫日记 10:00、酷喵 10:30 错开）
 # 调用 Claude Code headless 模式完成：搜索 → 调研 → 写文章 → 部署
 
-PROJECT_DIR="/Users/xiedonghua/Desktop/AI/github/blogs/caterpillar-invest-diary"
+PROJECT_DIR="/root/blogs/caterpillar-invest-diary"
 LOG_FILE="/tmp/caterpillar-invest-diary.log"
-FEISHU_NOTIFY="/Users/xiedonghua/scripts/feishu-notify.sh"
+FEISHU_NOTIFY="/root/scripts/feishu-notify.sh"
 DATE=$(date +%Y-%m-%d)
 
 echo "===== [$DATE $(date +%H:%M:%S)] 开始每日金融市场调研 =====" >> "$LOG_FILE"
 
 # 确保 claude、pnpm、node 在 PATH 中
-export PATH="/Users/xiedonghua/.nvm/versions/node/v22.17.0/bin:/usr/local/bin:/usr/bin:/bin"
+export PATH="/home/admin/.nvm/versions/node/v24.15.0/bin:/usr/local/bin:/usr/bin:/bin"
+source /root/.claude-key-setup.sh
 
 # 进入项目目录
 cd "$PROJECT_DIR"
@@ -21,7 +22,7 @@ git checkout main 2>/dev/null
 
 # 计算天数（从 2026-07-15 第一天开始计数）
 START_DATE="2026-07-15"
-DAY_NUMBER=$(( ($(date -j -f "%Y-%m-%d" "$DATE" "+%s") - $(date -j -f "%Y-%m-%d" "$START_DATE" "+%s")) / 86400 + 1 ))
+DAY_NUMBER=$(( ($(date -d "$DATE" +%s) - $(date -d "$START_DATE" +%s)) / 86400 + 1 ))
 
 # 根据星期几选择主题 (1=周一, ..., 7=周日)
 DAY_OF_WEEK=$(date +%u)
@@ -206,7 +207,7 @@ if [ $EXIT_CODE -eq 0 ]; then
   echo "[$DATE] 投资日记完成！退出码: $EXIT_CODE" >> "$LOG_FILE"
 
   # 发布到微信公众号草稿箱
-  WECHAT_PUBLISH="/Users/xiedonghua/scripts/wechat-publish-invest.sh"
+  WECHAT_PUBLISH=""
   POST_FILE=$(ls -t "$PROJECT_DIR/src/content/posts/${DATE}"-*.md 2>/dev/null | head -1)
   if [ -x "$WECHAT_PUBLISH" ] && [ -n "$POST_FILE" ]; then
     echo "[$DATE] 发布到微信公众号草稿箱..." >> "$LOG_FILE"
